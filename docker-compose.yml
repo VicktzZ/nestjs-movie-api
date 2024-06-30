@@ -1,0 +1,30 @@
+services: 
+  nestapp:
+    container_name: nestapp
+    image: francescoxx/nestapp:1.0.0
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_TYPE=postgres
+      - PG_HOST=db # change to db in local machine
+      - PG_USER=postgres # change to postgres in local machine
+      - PG_PASSWORD=postgres # change to postgres in local machine
+      - PG_DB=postgres # change to postgres in local machine
+      - PG_PORT=5432 # change to 5432 in local machine
+      - DB_SYNCHRONIZE=true # change to true in local machine
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata: {}
